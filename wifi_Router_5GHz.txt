@@ -1,0 +1,14 @@
+Router 5GHz
+Download: 61.78 Mbit/s Upload: 16.97 Mbit/s
+
+Download: 61.71 Mbit/s Upload: 22.51 Mbit/s
+
+Download: 64.01 Mbit/s Upload: 22.25 Mbit/s
+
+Download: 63.33 Mbit/s Upload: 22.09 Mbit/s
+
+Download: 61.23 Mbit/s Upload: 21.02 Mbit/s
+
+Download: 55.28 Mbit/s Upload: 16.45 Mbit/s
+
+
