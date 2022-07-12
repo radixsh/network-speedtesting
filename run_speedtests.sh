@@ -7,9 +7,9 @@ then
     echo "Usage: ./run_speedtests.sh <router OR extender> <band-type>"
     exit 1
 fi
-
 ROUTER_OR_EXTENDER=$1
 GHZ=$2
+
 # This will be the name of the output file
 OUTPUT_FILE="${ROUTER_OR_EXTENDER}_${GHZ}"
 
@@ -28,7 +28,6 @@ for ((i=0;i<=ITERS;i++)) do
     echo -e "Running test ${i}..."
     # https://www.tecmint.com/assign-linux-command-output-to-variable/
     speedtest=$(speedtest)
-
     # https://stackoverflow.com/questions/13373249/extract-substring-using-regexp-in-plain-bash
     # https://stackoverflow.com/questions/33573920/what-does-k-mean-in-this-regex
     # https://stackoverflow.com/questions/8101701/grep-characters-before-and-after-match
