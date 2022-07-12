@@ -1,0 +1,20 @@
+extended 5GHz
+
+
+
+Download: 36.44 Mbit/s
+Upload: 20.05 Mbit/s
+
+Download: 71.63 Mbit/s
+Upload: 20.24 Mbit/s
+
+Download: 77.93 Mbit/s
+Upload: 21.95 Mbit/s
+
+Download: 78.66 Mbit/s
+Upload: 20.11 Mbit/s
+
+Download: 77.65 Mbit/s
+Upload: 21.86 Mbit/s
+
+

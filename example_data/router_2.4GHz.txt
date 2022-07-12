@@ -1,0 +1,20 @@
+router 2.4GHz
+Download: 29.61 Mbit/s
+Upload: 7.21 Mbit/s
+
+Download: 11.13 Mbit/s
+Upload: 9.34 Mbit/s
+
+Download: 40.85 Mbit/s
+Upload: 8.27 Mbit/s
+
+Download: 38.81 Mbit/s
+Upload: 8.05 Mbit/s
+
+Download: 19.15 Mbit/s
+Upload: 2.84 Mbit/s
+
+Download: 37.67 Mbit/s
+Upload: 11.02 Mbit/s
+
+

@@ -13,11 +13,9 @@ all_upload_speeds = []
 
 for filename in datafiles:
     f = open(f"data/{filename}", "r")
-    # lines = f.readlines()
     # The first line names the network being tested:
     header = f.readline().rstrip()
     network_names.append(header)
-    print(network_names)
     # Lines 2, 4, etc hold download info, and lines 3, 5, etc hold upload info.
     # Set a flag to mark the even-number lines as "download data".
     is_download = True 
@@ -25,7 +23,12 @@ for filename in datafiles:
     ul = [] # Will hold data from lines 3, 5, etc
     # Extract the floats from each line, and sort using the is_download flag
     for line in f:
-        if not line.strip():  # if empty line
+        # If any speedtests failed, they produce empty lines rather than lines
+        # like "Download: 31.41 Mbps" and "Upload: 59.26 Mbps". However, Python
+        # will successfully cast a blank line to the float 0.0. We must ignore
+        # empty lines. 
+        # https://stackoverflow.com/questions/7896495/python-how-to-check-if-a-line-is-an-empty-line
+        if not line.strip():
             pass
         for word in line.split():
             try:
@@ -44,10 +47,12 @@ for filename in datafiles:
     all_download_speeds.append(np.mean(dl))
     all_upload_speeds.append(np.mean(ul))
 
+print(f'Analyzed: {network_names}')
+
 # https://www.geeksforgeeks.org/bar-plot-in-matplotlib/
-# Labels for the bars in the bar graph 
-WIDTH = 0.25
 fig = plt.figure()
+WIDTH = 0.25
+
 # Evenly space out the downloads bars
 downloads = np.arange(len(all_download_speeds)) + WIDTH
 # The uploads bar will be just to the right of the downloads bar, resulting in
@@ -64,5 +69,5 @@ plt.xticks([r + WIDTH * 1.5 for r in range(len(all_download_speeds))], network_n
 plt.ylabel("Network speed (Mbps)")
 plt.legend(["Download", "Upload"], loc=2)
 
-plt.title("Network performance (PC, Radish's room)")
+plt.title("Network performance")
 plt.savefig("results")

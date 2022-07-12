@@ -1,0 +1,20 @@
+extended 2.4GHz
+Download: 11.11 Mbit/s
+Upload: 8.67 Mbit/s
+
+Download: 24.52 Mbit/s
+Upload: 6.08 Mbit/s
+
+Download: 21.62 Mbit/s
+Upload: 10.51 Mbit/s
+
+Download: 21.67 Mbit/s
+Upload: 5.86 Mbit/s
+
+Download: 22.24 Mbit/s
+Upload: 10.09 Mbit/s
+
+Download: 21.00 Mbit/s
+Upload: 11.03 Mbit/s
+
+

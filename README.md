@@ -43,5 +43,16 @@ Download: 20.42 Mbit/s
 Upload: 8.10 Mbit/s
 ```
 
-The script generated a file called `wifi_router_2.4GHz.txt` inside a
-subdirectory called `data` (which it created if `data` didn't already exist).
+The script generated a file called `router_2.4GHz.txt` inside a subdirectory
+called `data` (which it created if `data` didn't already exist). 
+
+Then, change to a different network and run the script again. Repeat as
+necessary.
+
+Once you are satisfied with the contents of `data/`, you can run `python3
+graph_speedtest_data.py`. The Python will yield a bar chart called
+`results.png`, in which each network (i.e., each datafile in `data/`) is
+represented by two bars, the green one being download speed and the blue one
+being upload speed.
+
+![Example output bar chart](example_results.png)
