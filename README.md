@@ -53,6 +53,7 @@ Once you are satisfied with the contents of `data/`, you can run `python3
 graph_speedtest_data.py`. The Python will yield a bar chart called
 `results.png`, in which each network (i.e., each datafile in `data/`) is
 represented by two bars, the green one being download speed and the blue one
-being upload speed.
+being upload speed. ![Example output bar chart](example_results.png)
 
-![Example output bar chart](example_results.png)
+# License
+Released under the MIT License.
