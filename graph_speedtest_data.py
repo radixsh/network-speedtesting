@@ -25,6 +25,8 @@ for filename in datafiles:
     ul = [] # Will hold data from lines 3, 5, etc
     # Extract the floats from each line, and sort using the is_download flag
     for line in f:
+        if not line.strip():  # if empty line
+            pass
         for word in line.split():
             try:
                 if is_download:
@@ -37,8 +39,8 @@ for filename in datafiles:
         is_download = not is_download
     # Append the average download/upload speeds from this one file to the
     # running list of download/upload speeds (this one file only analyzes one
-    # wifi network speed, so it contributes only two data points total: one for
-    # download, one for upload)
+    # network, so it contributes only two data points total: one for download,
+    # one for upload)
     all_download_speeds.append(np.mean(dl))
     all_upload_speeds.append(np.mean(ul))
 
@@ -49,7 +51,7 @@ fig = plt.figure()
 # Evenly space out the downloads bars
 downloads = np.arange(len(all_download_speeds)) + WIDTH
 # The uploads bar will be just to the right of the downloads bar, resulting in
-# the downloads/uploads bars for each wifi network being grouped together
+# the downloads/uploads bars for each network being grouped together
 uploads = [x + WIDTH for x in downloads]
 
 plt.bar(downloads, all_download_speeds, color="green", width=WIDTH)
@@ -59,8 +61,8 @@ plt.bar(uploads, all_upload_speeds, color="blue", width=WIDTH)
 # beginning of this script
 plt.xticks([r + WIDTH * 1.5 for r in range(len(all_download_speeds))], network_names)
 
-plt.ylabel("Wifi speed (Mbps)")
+plt.ylabel("Network speed (Mbps)")
 plt.legend(["Download", "Upload"], loc=2)
 
-plt.title("Wifi performance (PC, Radish's room)")
+plt.title("Network performance (PC, Radish's room)")
 plt.savefig("results")
