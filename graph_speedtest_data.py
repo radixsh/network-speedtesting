@@ -8,22 +8,23 @@ import datetime as dt
 # Get a list of all the files in the subdirectory containing my speedtest data
 datafiles = os.listdir('data')
 
-network_names = []
+# Will be populated like: info['router 2.4GHz'] = [14.94, 19.68]
+info = {}
+# As we go through the datafiles, we will make note of each timestamp on them,
+# and we will eventually find the timespan over which the data was taken
 dates = []
-all_download_speeds = []
-all_upload_speeds = []
 
 for filename in datafiles:
     f = open(f"data/{filename}", "r")
     # The first line is like "router 2.4GHz (2022-07-13_19-07)" 
     header = f.readline().rstrip()
-    # Put the network info into an array we'll use to label the bar chart 
-    test_name = ' '.join(header.split()[:2])
-    network_names.append(test_name)
+    name = ' '.join(header.split()[:2])
+
     # Save the date to an array. We'll calculate the spread of the data once
     # we've got all the dates.
-    test_date = header.split()[2]
-    dates.append(test_date)
+    date = header.split()[2]
+    dates.append(date)
+
     # Lines 2, 4, etc hold download info, and lines 3, 5, etc hold upload info.
     # Set a flag to mark the even-number lines as "download data".
     is_download = True
@@ -48,19 +49,22 @@ for filename in datafiles:
                 pass
         # Toggle the flag
         is_download = not is_download
+
     # Append the average download/upload speeds from this one file to the
-    # running list of download/upload speeds (this one file only analyzes one
+    # running dict of download/upload speeds (this one file only analyzes one
     # network, so it contributes only two data points total: one for download,
     # one for upload)
-    all_download_speeds.append(np.mean(dl))
-    all_upload_speeds.append(np.mean(ul))
+    info[name] = [np.mean(dl), np.mean(ul)]
 
-print(f'Analyzed: {network_names}')
+## print(f'Analyzed: {network_names}')
 
 # https://www.geeksforgeeks.org/bar-plot-in-matplotlib/
 fig = plt.figure()
+plt.legend(["Download", "Upload"], loc=2)
+plt.ylabel("Network speed (Mbps)")
 
 # Find the spread of the dates, and use this to title the figure
+# https://stackabuse.com/converting-strings-to-datetime-in-python/
 python_readable_datetimes = []
 for d in dates:
     d = d[1:]
@@ -73,19 +77,24 @@ plt.title(f"Network performance (spanning {spread} minutes)")
 
 # Evenly space out the downloads bars
 WIDTH = 0.25
-downloads = np.arange(len(all_download_speeds)) + WIDTH
+downloads_place = np.arange(len(info)) + WIDTH
 # The uploads bar will be offset to the right of the downloads bar, resulting in
 # the downloads/uploads bars for each network being grouped together
-uploads = [x + WIDTH for x in downloads]
+uploads_place = [x + WIDTH for x in downloads_place]
 
-plt.bar(downloads, all_download_speeds, color="green", width=WIDTH)
-plt.bar(uploads, all_upload_speeds, color="blue", width=WIDTH)
+# Pull the list values of the dict out into their own lists, one by one (ugly,
+# but Python complained at me when I tried to directly read info.values()[0]) 
+downloads = []
+uploads = []
+# The dict is formatted like info['router 2.4GHz'] = [13.94, 19.68]
+for conn in info.values():
+    downloads.append(conn[0])
+    uploads.append(conn[1])
 
-# Label the x-axis using the output of os.listdir(), which we used at the
-# beginning of this script
-plt.xticks([r + WIDTH * 1.5 for r in range(len(all_download_speeds))], network_names)
+plt.bar(downloads_place, downloads, color="green", width=WIDTH)
+plt.bar(uploads_place, uploads, color="blue", width=WIDTH)
 
-plt.ylabel("Network speed (Mbps)")
-plt.legend(["Download", "Upload"], loc=2)
+# Label the x-axis using the keys of the info dict 
+plt.xticks([r + WIDTH * 1.5 for r in range(len(info))], info)
 
 plt.savefig("results")
