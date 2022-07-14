@@ -23,6 +23,7 @@ for filename in datafiles:
     # Save the date (stripped of its parentheses) to an array. We'll calculate
     # the spread of the data once we've got all the dates.
     date = header.split()[2][1:-1]
+    # https://www.w3schools.com/python/python_datetime.asp
     date = dt.datetime.strptime(date, '%Y-%m-%d_%H-%M')
     dates.append(date)
 
@@ -102,6 +103,8 @@ for conn in info.values():
 # plt.bar(uploads_bar, uploads, color="blue", width=WIDTH)
 
 # TODO: make the double bars closer together lol
+# https://stackoverflow.com/questions/40575067/matplotlib-bar-chart-space-out-bars#40575741
+# https://www.geeksforgeeks.org/plotting-multiple-bar-charts-using-matplotlib-in-python/
 WIDTH = 0.01
 x_axis = np.arange(len(info))  # [i*2 for i in range(len(info))]
 print("x_axis: " + str(x_axis))
