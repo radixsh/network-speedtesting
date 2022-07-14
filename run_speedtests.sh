@@ -10,11 +10,14 @@ fi
 ROUTER_OR_EXTENDER=$1
 GHZ=$2
 
+# Current date, for filename prefix; format like 2022-07-13_19:02
+DATE=$(date +'%Y-%m-%0d_%H-%M')
+
 # This will be the name of the output file
-OUTPUT_FILE="${ROUTER_OR_EXTENDER}_${GHZ}"
+OUTPUT_FILE="${DATE}_${ROUTER_OR_EXTENDER}_${GHZ}"
 
 # Initialize OUTPUT (which will populate the output file) with a header line
-OUTPUT="${ROUTER_OR_EXTENDER} ${GHZ}\n"
+OUTPUT="${ROUTER_OR_EXTENDER} ${GHZ} (${DATE})\n"
 # Ensure existence of a subdirectory to hold the output file
 # https://stackoverflow.com/questions/793858/how-to-mkdir-only-if-a-directory-does-not-already-exist
 mkdir -p data/
