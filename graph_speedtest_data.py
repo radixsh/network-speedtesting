@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import matplotlib
 import numpy as np
 import os
 import sys
@@ -61,34 +62,16 @@ for filename in datafiles:
 print(f'Analyzed: {str(info.keys())}')
 
 # https://www.geeksforgeeks.org/bar-plot-in-matplotlib/
-# fig = plt.figure()
 
-fig, ax = plt.subplots(figsize=(20,20))
+fig, ax = plt.subplots(figsize=(30,30))
 
-plt.legend(["Download", "Upload"], loc=2)
 plt.ylabel("Network speed (Mbps)")
 
-'''
 # Find the spread of the dates, and use this to title the figure
-# https://stackabuse.com/converting-strings-to-datetime-in-python/
-python_readable_datetimes = []
-for d in dates:
-    d = d[1:]
-    d = d[:-1]
-    python_readable_datetimes.append(dt.datetime.strptime(d, '%Y-%m-%d_%H-%M'))
-'''
 spread = max(dates) - min(dates)
-# timedelta stores seconds, so get minutes like this
+# The timedelta stores seconds, so get minutes like this
 spread = int(spread.seconds / 60)
 plt.title(f"Network performance (spanning {spread} minutes)")
-
-## # Evenly space out the downloads bars
-## WIDTH = 0.1
-## x = np.arange(len(info))
-## downloads_bar = x - WIDTH
-## # The uploads bar will be offset to the right of the downloads bar, resulting in
-## # the downloads/uploads bars for each network being grouped together
-## uploads_bar = x + WIDTH
 
 # Pull the list values of the dict out into their own lists, one by one (ugly,
 # but Python complained at me when I tried to directly read info.values()[0])
@@ -99,27 +82,28 @@ for conn in info.values():
     downloads.append(conn[0])
     uploads.append(conn[1])
 
-# plt.bar(downloads_bar, downloads, color="green", width=WIDTH)
-# plt.bar(uploads_bar, uploads, color="blue", width=WIDTH)
-
 # TODO: make the double bars closer together lol
 # https://stackoverflow.com/questions/40575067/matplotlib-bar-chart-space-out-bars#40575741
 # https://www.geeksforgeeks.org/plotting-multiple-bar-charts-using-matplotlib-in-python/
-WIDTH = 0.01
-x_axis = np.arange(len(info))  # [i*2 for i in range(len(info))]
-print("x_axis: " + str(x_axis))
-# By editing the x_axis between the x-values, you change the space between bars
-# dlbar = [i - WIDTH for i in x_axis]
-# print("dlbar: " + str(dlbar))
-# ulbar = [i + WIDTH for i in x_axis]
-# print("ulbar: " + str(ulbar))
-plt.bar(x_axis - WIDTH, downloads, color="green", width=WIDTH*2)
-plt.bar(x_axis + WIDTH, uploads, color="blue", width=WIDTH*2)
+WIDTH = 0.05
+
+x_axis = [i/5 for i in range(len(info))]
+
+dlbar = [i - (WIDTH / 2) for i in x_axis]
+ulbar = [i + (WIDTH / 2) for i in x_axis]
+plt.bar(dlbar, downloads, color="green", width=WIDTH)
+plt.bar(ulbar, uploads, color="blue", width=WIDTH)
 
 # The first parameter is the same as above, but the second parameter is the
 # actual text to display
 plt.xticks(x_axis, info.keys())
 for tick in ax.get_xticklabels():
-        tick.set_rotation(90)
+        tick.set_rotation(45)
 
+ax = plt.gca()
+for item in ([ax.title, ax.xaxis.label, ax.yaxis.label] +
+        ax.get_xticklabels() + ax.get_yticklabels()):
+    item.set_fontsize(30)
+
+plt.legend(["Download", "Upload"], loc=2, fontsize=30)
 plt.savefig("results")
